@@ -18,6 +18,6 @@ protected:
 public:
 	Processer();
 	Processer(std::string imageName, int option, double value);
-	~Processer();
+	virtual ~Processer();
 };
 

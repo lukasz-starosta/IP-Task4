@@ -3,6 +3,7 @@
 #include "ImageProcesser.h"
 #include "HistogramProcesser.h"
 #include "MorphologicalProcesser.h"
+#include "FrequencyProcesser.h"
 
 using namespace std;
 
@@ -35,6 +36,13 @@ int main(int argc, char* argv[])
 		{
 			MorphologicalProcesser MorphologicalProcesser(arguments.imageName, arguments.option, (int)arguments.value);
 			MorphologicalProcesser.processImage();
+			break;
+		}
+
+		case ArgumentsHandler::Processers::FrequencyProcesser:
+		{
+			FrequencyProcesser FrequencyProcesser(arguments.imageName, arguments.option, (int)arguments.value);
+			FrequencyProcesser.processImage();
 			break;
 		}
 

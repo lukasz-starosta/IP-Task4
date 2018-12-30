@@ -5,8 +5,8 @@
 
 using namespace std;
 
-ArgumentsHandler::ArgumentsHandler(int argc, char* argv[])
-	:argc(argc), argv(argv)
+ArgumentsHandler::ArgumentsHandler(int argc, char *argv[])
+        : argc(argc), argv(argv)
 {
 }
 
@@ -16,88 +16,90 @@ ArgumentsHandler::~ArgumentsHandler()
 
 int ArgumentsHandler::convertToInt(std::string option) const
 {
-	for (int i = 0; i <= 36; i++)
-	{
-		if (options[i] == option) return i;
-	}
-	return 0;
+    for (int i = 0; i <= 45; i++)
+    {
+        if (options[i] == option) return i;
+    }
+    return 0;
 }
 
 bool ArgumentsHandler::optionIsValid(string option) const
 {
-	return find(begin(options), end(options), option) != end(options);
+    return find(begin(options), end(options), option) != end(options);
 }
 
 bool ArgumentsHandler::optionRequiresValue(string option) const
 {
-	return find(begin(optionsRequiringValues), end(optionsRequiringValues), option) != end(optionsRequiringValues);
+    return find(begin(optionsRequiringValues), end(optionsRequiringValues), option) != end(optionsRequiringValues);
 }
 
 bool ArgumentsHandler::optionRequiresChannel(string option) const
 {
-	return find(begin(optionsRequiringChannel), end(optionsRequiringChannel), option) != end(optionsRequiringChannel);
+    return find(begin(optionsRequiringChannel), end(optionsRequiringChannel), option) != end(optionsRequiringChannel);
 }
 
 bool ArgumentsHandler::isPowerOfTwo(int x) const
 {
-	while (x != 1)
-	{
-		if (x % 2 != 0) return false;
-		x /= 2;
-	}
-	return true;
+    while (x != 1)
+    {
+        if (x % 2 != 0) return false;
+        x /= 2;
+    }
+    return true;
 }
 
 bool ArgumentsHandler::valueIsValid(string value) const
 {
-	int dot_counter = 0;
+    int dot_counter = 0;
 
-	for (string::iterator iterator = value.begin(); iterator != value.end(); ++iterator)
-	{
-		if (*iterator < 48 || *iterator > 57)
-		{
-			// Options which accept floats and negative values
-			if (option == "--brightness" || option == "--contrast")
-			{
-				if (iterator == value.begin() && *iterator == 45) continue;
-				if (iterator != value.begin() && *iterator == 46) dot_counter++;
-				else return false;
-			}
-			// Options which accept floats
-			else if (option == "--enlarge" || option == "--shrink")
-			{
-				if (iterator != value.begin() && *iterator == 46) dot_counter++;
-				else return false;
-			}
-			// Options which accept integrals
-			else return false;
-		}
-		if (dot_counter > 1) return false;
-	}
+    for (string::iterator iterator = value.begin(); iterator != value.end(); ++iterator)
+    {
+        if (*iterator < 48 || *iterator > 57)
+        {
+            // Options which accept floats and negative values
+            if (option == "--brightness" || option == "--contrast")
+            {
+                if (iterator == value.begin() && *iterator == 45) continue;
+                if (iterator != value.begin() && *iterator == 46) dot_counter++;
+                else return false;
+            }
+                // Options which accept floats
+            else if (option == "--enlarge" || option == "--shrink")
+            {
+                if (iterator != value.begin() && *iterator == 46) dot_counter++;
+                else return false;
+            }
+                // Options which accept integrals
+            else return false;
+        }
+        if (dot_counter > 1) return false;
+    }
 
-	if (optionRequiresChannel(option) && stoi(value) > 2) return false;
-	if (option == "--hpower" && !isWithinPixelRange(stoi(value))) return false;
-	if (option == "--sedgesharp" && stoi(value) > 3) return false;
-	if (option == "--orosenfeld" && (stoi(value) <= 0 || !isPowerOfTwo(stoi(value)))) return false;
-	if ((option == "--dilation" || option == "--erosion" || option == "--opening" || option == "--closing") && stoi(value) > 9) return false;
+    if (optionRequiresChannel(option) && stoi(value) > 2) return false;
+    if (option == "--hpower" && !isWithinPixelRange(stoi(value))) return false;
+    if (option == "--sedgesharp" && stoi(value) > 3) return false;
+    if (option == "--orosenfeld" && (stoi(value) <= 0 || !isPowerOfTwo(stoi(value)))) return false;
+    if ((option == "--dilation" || option == "--erosion" || option == "--opening" || option == "--closing") &&
+        stoi(value) > 9)
+        return false;
 
-	return true;
+    return true;
 }
 
 bool ArgumentsHandler::isNameOfFile(std::string name) const
 {
-	return name.size() >= 4 && name.compare(name.size() - 4, 4, ".bmp") == 0;
+    return name.size() >= 4 && name.compare(name.size() - 4, 4, ".bmp") == 0;
 }
 
 bool ArgumentsHandler::isWithinPixelRange(int value) const
 {
-	if (value < 0 || value > 255) return false;
-	return true;
+    if (value < 0 || value > 255) return false;
+    return true;
 }
 
 void ArgumentsHandler::helpMessage() const
 {
-	std::cout << R"(Command line format:
+    std::cout << R"(Command line format:
 	name --command [-argument=value [...]]
 
 Available commands:
@@ -236,137 +238,141 @@ TASK 2:
 
 	--orosenfeld P
 		Edge detection algorithm. P must be a power of 2.
-
 )";
 }
 
 void ArgumentsHandler::validateArguments()
 {
-	//Definition of type beeing a pointer to a void function within class Error
-	typedef void (Error::*Error_fnc_ptr)();
+    //Definition of type being a pointer to a void function within class Error
+    typedef void (Error::*Error_fnc_ptr)();
 
-	Error error;
+    Error error;
 
-	switch (argc)
-	{
-		case 2:
-			option = argv[1];
+    switch (argc)
+    {
+        case 2:
+            option = argv[1];
 
-			try
-			{
-				option == "--help" ? helpMessage() : throw error.invalidArguments;
-			}
-			catch (Error_fnc_ptr exception)
-			{
-				(error.*exception)();
-			}
-			break;
-		case 3:
-			imageName = argv[1];
-			option = argv[2];
+            try
+            {
+                option == "--help" ? helpMessage() : throw error.invalidArguments;
+            }
+            catch (Error_fnc_ptr exception)
+            {
+                (error.*exception)();
+            }
+            break;
+        case 3:
+            imageName = argv[1];
+            option = argv[2];
 
-			try
-			{
-				if (optionIsValid(option) && option != "--help")
-				{
-					argumentsAreValid = optionRequiresValue(option) ? throw error.optionNeedsValue : true;
-				}
-				else throw error.invalidOption;
-			}
-			catch (Error_fnc_ptr exception)
-			{
-				(error.*exception)();
-			}
-			break;
-		case 4:
-			imageName = argv[1];
-			option = argv[2];
-			value = argv[3];
+            try
+            {
+                if (optionIsValid(option) && option != "--help")
+                {
+                    argumentsAreValid = optionRequiresValue(option) ? throw error.optionNeedsValue : true;
+                } else throw error.invalidOption;
+            }
+            catch (Error_fnc_ptr exception)
+            {
+                (error.*exception)();
+            }
+            break;
+        case 4:
+            imageName = argv[1];
+            option = argv[2];
+            value = argv[3];
 
-			try
-			{
+            try
+            {
 
-				if (optionIsValid(option) && option != "--help")
-				{
-					if (!optionRequiresValue(option) || option == "--hpower") { throw error.invalidNumberOfArguments; }
-					else if (!valueIsValid(value)) { throw error.invalidValue; }
-					else { argumentsAreValid = true; break; }
-				}
-				else throw error.invalidOption;
-				break;
+                if (optionIsValid(option) && option != "--help")
+                {
+                    if (!optionRequiresValue(option) || option == "--hpower")
+                    { throw error.invalidNumberOfArguments; }
+                    else if (!valueIsValid(value))
+                    { throw error.invalidValue; }
+                    else
+                    {
+                        argumentsAreValid = true;
+                        break;
+                    }
+                } else throw error.invalidOption;
 
-			}
-			catch (Error_fnc_ptr exception)
-			{
-				(error.*exception)();
-			}
-			break;
-		case 5:
-			imageName = argv[1];
-			option = argv[2];
+            }
+            catch (Error_fnc_ptr exception)
+            {
+                (error.*exception)();
+            }
+            break;
+        case 5:
+            imageName = argv[1];
+            option = argv[2];
 
-			try
-			{
-				if (optionIsValid(option))
-				{
-					if (option == "--help") { throw error.invalidArguments; }
-					if (option == "--hpower")
-					{
-						value = argv[3];
-						secondValue = argv[4];
-						if (valueIsValid(value) && valueIsValid(secondValue))
-						{
-							if (stoi(value) <= stoi(secondValue))
-							{
-								argumentsAreValid = true; break;
-							}
-						}
-						throw error.invalidValue;
-					}
-					else if (optionRequiresValue(option))
-					{
-						noisyImageName = argv[3];
-						denoisedImageName = argv[4];
-						if (isNameOfFile(noisyImageName) && isNameOfFile(denoisedImageName))
-						{
-							argumentsAreValid = true; break;
-						}
-					}
-					throw error.invalidValue;
-				}
-				else throw error.invalidArguments;
-			}
-			catch (Error_fnc_ptr exception)
-			{
-				(error.*exception)();
-			}
-			break;
-		default:
-			error.InvalidNumberOfArguments();
-			break;
-	}
+            try
+            {
+                if (optionIsValid(option))
+                {
+                    if (option == "--help")
+                    { throw error.invalidArguments; }
+                    if (option == "--hpower")
+                    {
+                        value = argv[3];
+                        secondValue = argv[4];
+                        if (valueIsValid(value) && valueIsValid(secondValue))
+                        {
+                            if (stoi(value) <= stoi(secondValue))
+                            {
+                                argumentsAreValid = true;
+                                break;
+                            }
+                        }
+                        throw error.invalidValue;
+                    } else if (optionRequiresValue(option))
+                    {
+                        noisyImageName = argv[3];
+                        denoisedImageName = argv[4];
+                        if (isNameOfFile(noisyImageName) && isNameOfFile(denoisedImageName))
+                        {
+                            argumentsAreValid = true;
+                            break;
+                        }
+                    }
+                    throw error.invalidValue;
+                } else throw error.invalidArguments;
+            }
+            catch (Error_fnc_ptr exception)
+            {
+                (error.*exception)();
+            }
+            break;
+        default:
+            error.InvalidNumberOfArguments();
+            break;
+    }
 
 }
 
 ArgumentsHandler::Processers ArgumentsHandler::get_currentProcesser() const
 {
-	int currentOption = convertToInt(option);
-	if (currentOption < 17) return Processers::ImageProcesser;
-	if (currentOption < 29) return Processers::HistogramProcesser;
-	if (currentOption < 36) return Processers::MorphologicalProcesser;
-	return Processers::None;
+    int currentOption = convertToInt(option);
+    if (currentOption < 17) return Processers::ImageProcesser;
+    if (currentOption < 29) return Processers::HistogramProcesser;
+    if (currentOption < 36) return Processers::MorphologicalProcesser;
+    if (currentOption < 46) return Processers::FrequencyProcesser;
+    return Processers::None;
 }
 
 ArgumentsHandler::Arguments ArgumentsHandler::get_arguments() const
 {
-	ArgumentsHandler::Arguments arguments;
-	arguments.imageName = imageName;
-	arguments.denoisedImageName = denoisedImageName;
-	arguments.noisyImageName = noisyImageName;
-	arguments.option = convertToInt(option);
-	arguments.value = value.length() > 0 ? stod(value) : 0;
-	arguments.secondValue = secondValue.length() > 0 ? stoi(secondValue) : 0;
-	arguments.processer = get_currentProcesser();
+    ArgumentsHandler::Arguments arguments;
+    arguments.imageName = imageName;
+    arguments.denoisedImageName = denoisedImageName;
+    arguments.noisyImageName = noisyImageName;
+    arguments.option = convertToInt(option);
+    arguments.value = value.length() > 0 ? stod(value) : 0;
+    arguments.secondValue = secondValue.length() > 0 ? stoi(secondValue) : 0;
+    arguments.processer = get_currentProcesser();
 
-	return arguments;
+    return arguments;
 }

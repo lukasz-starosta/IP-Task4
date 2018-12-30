@@ -14,13 +14,15 @@ private:
 	std::string noisyImageName;
 	std::string denoisedImageName;
 
-	std::string options[36]{
+	std::string options[46]{
 		//Task 1 options (17 options) <0, 16>
 		"--help", "--brightness", "--contrast", "--negative", "--hflip", "--vflip", "--dflip", "--shrink", "--enlarge", "--min", "--max", "--median", "--mse", "--pmse", "--snr", "--psnr", "--md",
 		//Task 2 options (9 options) <17, 28>
 		"--histogram", "--hpower", "--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--casyco", "--cflatco", "--cvarcoii", "--centropy", "--sedgesharp", "--orosenfeld",
 		//Task 3 options (7 options) <29, 35>
-		"--dilation", "--erosion", "--opening", "--closing", "--hmt", "--mvariant", "--merging"
+		"--dilation", "--erosion", "--opening", "--closing", "--hmt", "--mvariant", "--merging",
+		//Task 4 options (10 options) <36, 45> (sndft - Slow Normal Discrete Fourier Transform, fidft - Fast Inverse DFT, filters are in order with the instructions)
+		"--sndft", "--fndft", "--sidft", "--fidft", "--lpfilter", "--hpfilter", "--bpfilter", "--bcfilter", "--hpedgefilter", "--pmfilter"
 	};
 
 	std::string optionsRequiringValues[25]{
@@ -49,6 +51,7 @@ public:
 		ImageProcesser,
 		HistogramProcesser,
 		MorphologicalProcesser,
+		FrequencyProcesser
 	};
 
 	struct Arguments
