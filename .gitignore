@@ -333,3 +333,6 @@ ASALocalRun/
 *.bmp
 # Ignore CMakeSettings.json
 CMakeSettings.json
+
+# Ignore .idea
+.idea/
