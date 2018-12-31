@@ -5,3 +5,19 @@
 #### Łukasz:
 * Przystosowanie aplikacji do taska
 #### Piotrek:
+
+
+
+### Possible logarithmic visualisation that can be applied to sndft
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                imageCopy(x, y, i) = std::log(std::abs(resultantMatrix[y][x])) > 0 ? (unsigned char) std::log(
+                        std::abs(resultantMatrix[y][x])) : (unsigned char) 0;
+            }
+        }
+        cout << endl;
+    }
