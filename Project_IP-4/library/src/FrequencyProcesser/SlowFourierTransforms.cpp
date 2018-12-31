@@ -1,35 +1,42 @@
 #include "FrequencyProcesser.h"
 
 #define _USE_MATH_DEFINES
+
 #include <math.h>
 
-/* 1-D DFT
-**  create a function which takes a row/column (array of real (1) /complex numbers (2)), the X in X-Point, performs a DFT and returns the resultant array
-*/
 
-void oneDimensionalDFTByRow(unsigned char imageRow[], std::complex<double> matrixRow[], int width)
+//PLEASE SEE the instructions if in doubt about the variable naming
+// Performs a DFT on the pixels obtained from the image (only the first channel)
+void oneDimensionalDFTByRow(cimg_library::CImg<unsigned char> *image, std::complex<double> **fourierMatrix, int height,
+                            int width)
 {
-    double real = 0, imag = 0;
-    // for each k (pixel in a row), sum all the real and imaginary parts separately, and assign them at the end to the pixel at matrixRow[k]
-    for (int k = 0; k < width; k++)
+    cimg_library::CImg<unsigned char> rowData;
+    std::complex<double> sum(0.0, 0.0);
+
+    for (int row = 0; row < height; row++)
     {
-        for (int n = 0; n < width; n++)
+        rowData = image->get_row(row);
+        for (int k = 0; k < width; k++)
         {
-            real += imageRow[n] * cos(2 * M_PI * n * k / width);
-            imag -= imageRow[n] * sin(2 * M_PI * n * k / width);
+            for (int n = 0; n < width; n++)
+            {
+                std::complex<double> W(cos(2 * M_PI * n * k / width), -sin(2 * M_PI * n * k / width));
+                sum += (double) rowData[n] * W;
+            }
+            fourierMatrix[row][k] = sum;
+            sum.real(0.0);
+            sum.imag(0.0);
         }
-        matrixRow[k].real(real);
-        matrixRow[k].imag(imag);
-        real = 0;
-        imag = 0;
     }
 }
 
+//PLEASE SEE the instructions if in doubt about the variable naming
+// Performs a DFT from the previously obtained fourier matrix, yields another matrix with complex numbers
 void
-oneDimensionalDFTByColumn(std::complex<double> **fourierMatrix, std::complex<double> **resultantMatrix, int height,
+oneDimensionalDFTByColumn(std::complex<double> **fourierMatrix, std::complex<double> **finalMatrix, int height,
                           int width)
 {
-    std::complex<double> p(0.0, 0.0);
+    std::complex<double> sum(0.0, 0.0);
 
     for (int column = 0; column < width; column++)
     {
@@ -37,12 +44,12 @@ oneDimensionalDFTByColumn(std::complex<double> **fourierMatrix, std::complex<dou
         {
             for (int n = 0; n < height; n++)
             {
-                std::complex<double> c(cos(2 * M_PI * n * k / height), -sin(2 * M_PI * n * k / height));
-                p += fourierMatrix[n][column] * c;
+                std::complex<double> W(cos(2 * M_PI * n * k / height), -sin(2 * M_PI * n * k / height));
+                sum += fourierMatrix[n][column] * W;
             }
-            resultantMatrix[k][column] = p;
-            p.real(0.0);
-            p.imag(0.0);
+            finalMatrix[k][column] = sum;
+            sum.real(0.0);
+            sum.imag(0.0);
         }
     }
 }
@@ -51,28 +58,23 @@ void FrequencyProcesser::slowNormalDFT()
 {
     cimg_library::CImg<unsigned char> imageCopy = image;
 
-    //initialize matrix of the same size as the image
+    // Initialize the first matrix of the same size as the image
     auto **matrix = new std::complex<double> *[height];
+    // Initialize the final matrix of the same size as the image
+    auto **resultantMatrix = new std::complex<double> *[height];
+    // Initialize columns of the matrices
     for (int row = 0; row < height; row++)
     {
         matrix[row] = new std::complex<double>[width];
-    }
-
-    auto **resultantMatrix = new std::complex<double> *[height];
-    for (int row = 0; row < height; row++)
-    {
         resultantMatrix[row] = new std::complex<double>[width];
     }
 
-    //iterate through rows of the copy, for each row perform a discrete fourier transform
-    for (int row = 0; row < height; row++)
-    {
-        oneDimensionalDFTByRow(imageCopy.get_row(row), matrix[row], width);
-    }
-
+    // Perform the DFT based on the image, yield 'matrix'
+    oneDimensionalDFTByRow(&imageCopy, matrix, height, width);
+    // Perform the DFT based on the 'matrix', yield 'resultant matrix'
     oneDimensionalDFTByColumn(matrix, resultantMatrix, height, width);
 
-    //cleanup
+    // Cleanup
     for (int i = 0; i < height; i++)
     {
         delete[] matrix[i];
