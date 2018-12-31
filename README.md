@@ -4,6 +4,7 @@
 ### Podział:
 #### Łukasz:
 * Przystosowanie aplikacji do taska
+* SNDFT
 #### Piotrek:
 
 
