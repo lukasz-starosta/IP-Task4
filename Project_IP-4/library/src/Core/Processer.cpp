@@ -1,7 +1,5 @@
 #include "Processer.h"
 
-
-
 int Processer::truncate(double value)
 {
 	if (value < 0) return 0;

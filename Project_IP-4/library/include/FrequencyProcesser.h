@@ -1,6 +1,7 @@
 #ifndef IP_TASK_4_217862_217846_FREQUENCYPROCESSER_H
 #define IP_TASK_4_217862_217846_FREQUENCYPROCESSER_H
 #include "Processer.h"
+#include "complex"
 
 class FrequencyProcesser : public Processer
 {
@@ -10,10 +11,12 @@ private:
         sndft = 36, fndft, sidft, fidft, lpfilter, hpfilter, bpfilter, bcfilter, hpedgefilter, pmfilter
     };
 
+    void slowNormalDFT();
+
 public:
     FrequencyProcesser();
     FrequencyProcesser(std::string imageName, int option, double value);
-    ~FrequencyProcesser();
+    ~FrequencyProcesser() override;
     void processImage();
 };
 
