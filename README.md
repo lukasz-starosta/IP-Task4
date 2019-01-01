@@ -3,9 +3,10 @@
 [T2, wszystkie F](http://ics.p.lodz.pl/~tomczyk/available/po_en/fourth.html)
 ### Podział:
 #### Łukasz:
-* Przystosowanie aplikacji do taska
-* SNDFT
-* Wizualizacja
-* zaklepuje SIDFT jako ze robilem SNDFT
-* dwa filtry
+* Przystosowanie aplikacji do taska ✔
+* SNDFT ✔
+* Wizualizacja ✔
+* SIDFT jako ze robilem SNDFT 🔜™
+* filtr 🔜™
+* filtr 🔜™
 #### Piotrek:
