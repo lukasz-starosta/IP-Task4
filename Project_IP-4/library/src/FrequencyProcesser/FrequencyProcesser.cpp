@@ -5,18 +5,26 @@
 
 
 using namespace std;
+
 FrequencyProcesser::FrequencyProcesser()
 {
 }
 
-FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value) : Processer(imageName, option, value)
+FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value) : Processer(imageName, option,
+                                                                                                    value)
 {
-
 }
 
 FrequencyProcesser::~FrequencyProcesser()
 {
-
+    // Cleanup
+    for (int i = 0; i < height; i++)
+    {
+        delete[] firstMatrix[i];
+        delete[] finalMatrix[i];
+    }
+    delete[] firstMatrix;
+    delete[] finalMatrix;
 }
 
 void FrequencyProcesser::processImage()
@@ -38,8 +46,10 @@ void FrequencyProcesser::processImage()
     height = image.height();
     width = image.width();
 
+    // Allocate memory for the matrices needed to perform the fourier transforms
+    initializeMatrices();
+
     chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
-    int channel = (int)value;
     switch (option)
     {
         case sndft:
@@ -75,11 +85,33 @@ void FrequencyProcesser::processImage()
         default:
             break;
     }
-
     chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double)1000000;
+    auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double) 1000000;
     cout << "Algorithm duration: " << duration << " seconds";
+
+    if (option == sndft || option == fndft)
+    {
+        if (value == 1) {
+            image = getFourierLogarithmicVisualisation();
+        } else {
+            image = getFourierVisualisation();
+        }
+    }
+
     image.save("processedImage.bmp");
     image.display("Processed image", false);
 }
 
+void FrequencyProcesser::initializeMatrices()
+{
+    // Initialize the first matrix of the same size as the image
+    firstMatrix = new std::complex<double> *[height];
+    // Initialize the final matrix of the same size as the image
+    finalMatrix = new std::complex<double> *[height];
+    // Initialize columns of the matrices
+    for (int row = 0; row < height; row++)
+    {
+        firstMatrix[row] = new std::complex<double>[width];
+        finalMatrix[row] = new std::complex<double>[width];
+    }
+}

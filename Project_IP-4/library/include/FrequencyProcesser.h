@@ -11,8 +11,14 @@ private:
         sndft = 36, fndft, sidft, fidft, lpfilter, hpfilter, bpfilter, bcfilter, hpedgefilter, pmfilter
     };
 
-    void slowNormalDFT();
+    std::complex<double> **firstMatrix;
+    std::complex<double> **finalMatrix;
 
+    cimg_library::CImg<unsigned char> getFourierVisualisation();
+    cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
+
+    void slowNormalDFT();
+    void initializeMatrices();
 public:
     FrequencyProcesser();
     FrequencyProcesser(std::string imageName, int option, double value);

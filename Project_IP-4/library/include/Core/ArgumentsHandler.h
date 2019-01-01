@@ -25,8 +25,8 @@ private:
 		"--sndft", "--fndft", "--sidft", "--fidft", "--lpfilter", "--hpfilter", "--bpfilter", "--bcfilter", "--hpedgefilter", "--pmfilter"
 	};
 
-	std::string optionsRequiringValues[25]{
-		"--brightness", "--contrast", "--shrink", "--enlarge", "--min", "--max", "--median", "--histogram", "--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--casyco", "--cflatco", "--cvarcoii", "--centropy", "--hpower", "--sedgesharp", "--orosenfeld", "--dilation", "--erosion", "--opening", "--closing", "--hmt", "--merging"
+	std::string optionsRequiringValues[27]{
+		"--brightness", "--contrast", "--shrink", "--enlarge", "--min", "--max", "--median", "--histogram", "--cmean", "--cvariance", "--cstdev", "--cvarcoi", "--casyco", "--cflatco", "--cvarcoii", "--centropy", "--hpower", "--sedgesharp", "--orosenfeld", "--dilation", "--erosion", "--opening", "--closing", "--hmt", "--merging", "--sndft", "--fndft"
 	};
 
 	std::string optionsRequiringChannel[9]{
