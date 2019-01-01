@@ -25,7 +25,7 @@ set(SOURCE_FILES
 	src/MorphologicalOperations/MorphologicalProcesser.cpp
 	src/MorphologicalOperations/MorphologicalOperations.cpp
 	src/MorphologicalOperations/RegionMerging.cpp
-        src/FrequencyProcesser/FrequencyProcesser.cpp include/FrequencyProcesser.h)
+        src/FrequencyProcesser/FrequencyProcesser.cpp include/FrequencyProcesser.h src/FrequencyProcesser/SlowFourierTransforms.cpp)
 
 add_library(Library ${SOURCE_FILES})
 target_include_directories(Library PUBLIC include 

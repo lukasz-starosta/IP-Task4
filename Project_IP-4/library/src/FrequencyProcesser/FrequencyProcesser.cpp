@@ -1,6 +1,8 @@
 #include "FrequencyProcesser.h"
 #include <iostream>
 #include <chrono>
+#include <FrequencyProcesser.h>
+
 
 using namespace std;
 FrequencyProcesser::FrequencyProcesser()
@@ -41,7 +43,7 @@ void FrequencyProcesser::processImage()
     switch (option)
     {
         case sndft:
-            cout << "sndft" << endl;
+            slowNormalDFT();
             break;
         case fndft:
             cout << "fndft" << endl;
