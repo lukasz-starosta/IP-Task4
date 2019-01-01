@@ -82,6 +82,8 @@ bool ArgumentsHandler::valueIsValid(string value) const
     if ((option == "--dilation" || option == "--erosion" || option == "--opening" || option == "--closing") &&
         stoi(value) > 9)
         return false;
+    if ((option == "--sndft" || option == "--fndft") && stoi(value) > 1)
+        return false;
 
     return true;
 }
@@ -238,6 +240,14 @@ TASK 2:
 
 	--orosenfeld P
 		Edge detection algorithm. P must be a power of 2.
+
+    _________________________________________________________
+    Task 4
+
+    For the DFTs
+    Value 0 shows the normalized magnitude visualisation, 1 shows the logarithmic magnitude visualisation
+    --sndft <0, 1>
+        Slow Normal Discrete Fourier Transform
 )";
 }
 
