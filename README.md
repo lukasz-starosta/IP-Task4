@@ -6,7 +6,7 @@
 * Przystosowanie aplikacji do taska ✔
 * SNDFT ✔
 * Wizualizacja ✔
-* SIDFT jako ze robilem SNDFT 🔜™
-* filtr 🔜™
-* filtr 🔜™
+* SIDFT ✔
+* Low-Pass filter 🔜™
+* Band-Pass filter 🔜™
 #### Piotrek:
