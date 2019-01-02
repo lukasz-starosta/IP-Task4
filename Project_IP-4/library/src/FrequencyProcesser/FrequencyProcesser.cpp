@@ -72,9 +72,11 @@ void FrequencyProcesser::processImage()
             break;
         case lpfilter:
             slowNormalDFT();
+            transformFinalMatrixToVisualisationMatrix();
             displayFourierPreview();
             lowPassFilter(value);
             displayFourierPreview();
+            transformVisualisationMatrixToFinalMatrix();
             slowInverseDFT();
             break;
         case hpfilter:
@@ -101,7 +103,11 @@ void FrequencyProcesser::processImage()
 
     if (option == sndft || option == fndft)
     {
-        displayFourierPreview();
+        if (value == 1) {
+            image = getFourierVisualisation();
+        } else {
+            image = getFourierLogarithmicVisualisation();
+        }
     }
 
     image.save("processedImage.bmp");

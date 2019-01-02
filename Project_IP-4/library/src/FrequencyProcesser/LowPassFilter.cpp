@@ -1,5 +1,6 @@
 #include "FrequencyProcesser.h"
 #include <iostream>
+
 void FrequencyProcesser::lowPassFilter(double maxFrequencyPercentage)
 {
     double maxFrequency = std::abs(finalMatrix[0][0]);
@@ -8,10 +9,11 @@ void FrequencyProcesser::lowPassFilter(double maxFrequencyPercentage)
     {
         for (int column = 0; column < width; column++)
         {
-            if (std::abs(finalMatrix[row][column]) > cutOffFrequency) {
-                std::cout<<row<<" " <<column<<" " << "zeroed"<<std::endl;
-                    finalMatrix[row][column].real(0);
-                    finalMatrix[row][column].imag(0);
+            if (std::abs(visualisationMatrix[row][column]) > cutOffFrequency)
+            {
+                std::cout << row << " " << column << " " << "zeroed" << std::endl;
+                visualisationMatrix[row][column].real(0);
+                visualisationMatrix[row][column].imag(0);
             }
         }
     }

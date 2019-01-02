@@ -19,9 +19,29 @@ void FrequencyProcesser::transformFinalMatrixToVisualisationMatrix()
     }
 }
 
+
+void FrequencyProcesser::transformVisualisationMatrixToFinalMatrix()
+{
+    for (int y = 0; y < height / 2; y++)
+    {
+        for (int x = 0; x < width / 2; x++)
+        {
+            // top-left is bottom-right
+            finalMatrix[y][x] = visualisationMatrix[height / 2 + y][width / 2 + x];
+            // bottom-right is top-left
+            finalMatrix[height / 2 + y][width / 2 + x] = visualisationMatrix[y][x];
+            // top-right is bottom - left
+            finalMatrix[y][width / 2 + x] = visualisationMatrix[height / 2 + y][x];
+            // bottom-left is top-right
+            finalMatrix[height / 2 + y][x] = visualisationMatrix[y][width / 2 + x];
+        }
+    }
+}
+
 cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierVisualisation()
 {
     transformFinalMatrixToVisualisationMatrix();
+
     cimg_library::CImg<unsigned char> visualisation(width, height, 1, 3, 0);
 
     // In the final matrix, the DC component at [0][0] has the highest value
@@ -49,6 +69,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierVisualisation()
 cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierLogarithmicVisualisation()
 {
     transformFinalMatrixToVisualisationMatrix();
+
     cimg_library::CImg<unsigned char> visualisation(width, height, 1, 3, 0);
 
     unsigned char value;

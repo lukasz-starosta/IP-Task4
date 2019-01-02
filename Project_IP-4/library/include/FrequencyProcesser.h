@@ -16,6 +16,7 @@ private:
     std::complex<double> **visualisationMatrix;
     void initializeMatrices();
     void transformFinalMatrixToVisualisationMatrix();
+    void transformVisualisationMatrixToFinalMatrix();
 
     cimg_library::CImg<unsigned char> getFourierVisualisation();
     cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
