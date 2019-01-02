@@ -60,7 +60,13 @@ void FrequencyProcesser::processImage()
             break;
         case sidft:
             slowNormalDFT();
-            cout << "Slow Normal DFT computed. Inversing." << endl;
+            cout << "Slow Normal DFT computed." << endl;
+            if (value == 1) {
+                getFourierLogarithmicVisualisation().display("DFT preview", false);
+            } else {
+                getFourierVisualisation().display("DFT preview", false);
+            }
+            cout << "Computing Slow Inverse DFT." << endl;
             slowInverseDFT();
             break;
         case fidft:
