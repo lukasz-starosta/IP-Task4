@@ -18,6 +18,8 @@ private:
     cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
 
     void slowNormalDFT();
+    void slowInverseDFT();
+
     void initializeMatrices();
 public:
     FrequencyProcesser();

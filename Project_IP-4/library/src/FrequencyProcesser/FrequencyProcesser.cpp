@@ -59,7 +59,15 @@ void FrequencyProcesser::processImage()
             cout << "fndft" << endl;
             break;
         case sidft:
-            cout << "sidft" << endl;
+            slowNormalDFT();
+            cout << "Slow Normal DFT computed." << endl;
+            if (value == 1) {
+                getFourierLogarithmicVisualisation().display("DFT preview", false);
+            } else {
+                getFourierVisualisation().display("DFT preview", false);
+            }
+            cout << "Computing Slow Inverse DFT." << endl;
+            slowInverseDFT();
             break;
         case fidft:
             cout << "fidft" << endl;

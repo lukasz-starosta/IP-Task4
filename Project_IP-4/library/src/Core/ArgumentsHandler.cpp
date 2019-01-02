@@ -82,7 +82,7 @@ bool ArgumentsHandler::valueIsValid(string value) const
     if ((option == "--dilation" || option == "--erosion" || option == "--opening" || option == "--closing") &&
         stoi(value) > 9)
         return false;
-    if ((option == "--sndft" || option == "--fndft") && stoi(value) > 1)
+    if ((option == "--sndft" || option == "--fndft" || option == "--sidft" || option == "--fidft") && stoi(value) > 1)
         return false;
 
     return true;
@@ -95,8 +95,7 @@ bool ArgumentsHandler::isNameOfFile(std::string name) const
 
 bool ArgumentsHandler::isWithinPixelRange(int value) const
 {
-    if (value < 0 || value > 255) return false;
-    return true;
+    return (value >= 0 && value <= 255);
 }
 
 void ArgumentsHandler::helpMessage() const
@@ -248,6 +247,8 @@ TASK 2:
     Value 0 shows the normalized magnitude visualisation, 1 shows the logarithmic magnitude visualisation
     --sndft <0, 1>
         Slow Normal Discrete Fourier Transform
+    --sidft <0, 1>
+        Performs SNDFT, displays the result according to the chosen option, performs SIDFT and displays the final result, which should be the input image.
 )";
 }
 
