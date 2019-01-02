@@ -28,10 +28,10 @@ private:
             "--sndft", "--fndft", "--sidft", "--fidft", "--lpfilter", "--hpfilter", "--bpfilter", "--bcfilter", "--hpedgefilter", "--pmfilter"
     };
 
-    std::string optionsRequiringValues[30]{
+    std::string optionsRequiringValues[31]{
             "--brightness", "--contrast", "--shrink", "--enlarge", "--min", "--max", "--median", "--histogram", "--cmean", "--cvariance", "--cstdev",
             "--cvarcoi", "--casyco", "--cflatco", "--cvarcoii", "--centropy", "--hpower", "--sedgesharp", "--orosenfeld", "--dilation", "--erosion",
-            "--opening", "--closing", "--hmt", "--merging", "--sndft", "--fndft", "--sidft", "--fidft", "--lpfilter"
+            "--opening", "--closing", "--hmt", "--merging", "--sndft", "--fndft", "--sidft", "--fidft", "--lpfilter", "--hpfilter"
     };
 
     std::string optionsRequiringChannel[9]{
