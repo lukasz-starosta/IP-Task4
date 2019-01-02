@@ -72,14 +72,23 @@ void FrequencyProcesser::processImage()
             break;
         case lpfilter:
             slowNormalDFT();
-            displayFourierPreview();
+            transformFinalMatrixToVisualisationMatrix();
+            //Optional for viewing step by step
+            //displayFourierPreview();
             lowPassFilter(value);
             transformVisualisationMatrixToFinalMatrix();
-            displayFourierPreview();
+            //displayFourierPreview();
             slowInverseDFT();
             break;
         case hpfilter:
-            cout << "hpfilter" << endl;
+            slowNormalDFT();
+            transformFinalMatrixToVisualisationMatrix();
+            //Optional for viewing step by step
+            //displayFourierPreview();
+            highPassFilter(value);
+            transformVisualisationMatrixToFinalMatrix();
+            //displayFourierPreview();
+            slowInverseDFT();
             break;
         case bpfilter:
             cout << "bpfilter" << endl;
@@ -97,14 +106,19 @@ void FrequencyProcesser::processImage()
             break;
     }
 
+    chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double) 1000000;
+    cout << "Algorithm duration: " << duration << " seconds";
+
     if (option == sndft || option == fndft)
     {
-        chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double) 1000000;
-        cout << "Algorithm duration: " << duration << " seconds";
-        if (value == 1) {
+        // Visualisation
+        transformFinalMatrixToVisualisationMatrix();
+        if (value == 1)
+        {
             image = getFourierVisualisation();
-        } else {
+        } else
+        {
             image = getFourierLogarithmicVisualisation();
         }
     }
@@ -132,9 +146,12 @@ void FrequencyProcesser::initializeMatrices()
 
 void FrequencyProcesser::displayFourierPreview()
 {
-    if (value == 1) {
+    transformFinalMatrixToVisualisationMatrix();
+    if (value == 1)
+    {
         getFourierVisualisation().display("DFT preview", false);
-    } else {
+    } else
+    {
         getFourierLogarithmicVisualisation().display("DFT preview", false);
     }
 }

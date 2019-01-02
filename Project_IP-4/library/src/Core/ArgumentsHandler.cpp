@@ -251,6 +251,8 @@ TASK 2:
 
     --lpfilter >0
         Performs an ideal low pass filter, the value is the maximum distance from the origin of the visualisation.
+    --hpfilter >0
+        Performs an ideal high pass filter, the value is the maximum distance from the origin of the visualisation.
 )";
 }
 

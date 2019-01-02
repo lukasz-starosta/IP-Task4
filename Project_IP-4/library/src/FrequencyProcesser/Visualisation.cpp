@@ -40,8 +40,6 @@ void FrequencyProcesser::transformVisualisationMatrixToFinalMatrix()
 
 cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierVisualisation()
 {
-    transformFinalMatrixToVisualisationMatrix();
-
     cimg_library::CImg<unsigned char> visualisation(width, height, 1, 3, 0);
 
     // In the final matrix, the DC component at [0][0] has the highest value
@@ -68,8 +66,6 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierVisualisation()
 
 cimg_library::CImg<unsigned char> FrequencyProcesser::getFourierLogarithmicVisualisation()
 {
-    transformFinalMatrixToVisualisationMatrix();
-
     cimg_library::CImg<unsigned char> visualisation(width, height, 1, 3, 0);
 
     unsigned char value;
