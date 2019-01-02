@@ -13,14 +13,20 @@ private:
 
     std::complex<double> **firstMatrix;
     std::complex<double> **finalMatrix;
+    std::complex<double> **visualisationMatrix;
+    void initializeMatrices();
+    void transformFinalMatrixToVisualisationMatrix();
+    void transformVisualisationMatrixToFinalMatrix();
 
     cimg_library::CImg<unsigned char> getFourierVisualisation();
     cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
+    void displayFourierPreview();
 
     void slowNormalDFT();
     void slowInverseDFT();
 
-    void initializeMatrices();
+    void lowPassFilter(double distanceFromOrigin);
+
 public:
     FrequencyProcesser();
     FrequencyProcesser(std::string imageName, int option, double value);

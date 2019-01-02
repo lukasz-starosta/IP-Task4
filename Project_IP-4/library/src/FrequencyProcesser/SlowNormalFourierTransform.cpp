@@ -62,3 +62,4 @@ void FrequencyProcesser::slowNormalDFT()
     // Perform the DFT based on the 'firstMatrix', yield 'finalMatrix'
     oneDimensionalDFTByColumn(firstMatrix, finalMatrix, height, width);
 }
+

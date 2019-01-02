@@ -45,9 +45,12 @@ void oneDimensionalInverseDFTByRow(std::complex<double> **fourierMatrix, cimg_li
                 std::complex<double> W(cos(2 * M_PI * n * k / width), sin(2 * M_PI * n * k / width));
                 sum += fourierMatrix[row][n] * W;
             }
+
+            // Truncate the pixel value (can never go below 0)
+            unsigned char pixelValue = (std::abs(sum) / (double)width) > 255 ? (unsigned char) 255 : (unsigned char)(std::abs(sum) / (double)width);
             for (int channel = 0; channel < 3; channel++)
             {
-                (*image)(k, row, channel) = (unsigned char)(std::abs(sum) / (double)width);
+                (*image)(k, row, channel) = pixelValue;
             }
             sum.real(0.0);
             sum.imag(0.0);

@@ -84,7 +84,6 @@ bool ArgumentsHandler::valueIsValid(string value) const
         return false;
     if ((option == "--sndft" || option == "--fndft" || option == "--sidft" || option == "--fidft") && stoi(value) > 1)
         return false;
-
     return true;
 }
 
@@ -244,11 +243,14 @@ TASK 2:
     Task 4
 
     For the DFTs
-    Value 0 shows the normalized magnitude visualisation, 1 shows the logarithmic magnitude visualisation
+    Value 1 shows the normalized magnitude visualisation, other values show the logarithmic magnitude visualisation.
     --sndft <0, 1>
         Slow Normal Discrete Fourier Transform
     --sidft <0, 1>
         Performs SNDFT, displays the result according to the chosen option, performs SIDFT and displays the final result, which should be the input image.
+
+    --lpfilter >0
+        Performs an ideal low pass filter, the value is the maximum distance from the origin of the visualisation.
 )";
 }
 
