@@ -8,5 +8,15 @@
 * Wizualizacja ✔
 * SIDFT ✔
 * Low-Pass filter ✔
-* High-Pass filter 🔜™
+* High-Pass filter ✔
+
 #### Piotrek:
+>firstMatrix - pierwsza transformata fouriera po rzędach na podstawie obrazka
+
+>finalMatrix - druga transformata po kolumnach na podstawie pierwszej
+
+>visualisationMatrix - finalMatrix tylko ćwiartki są zmienione aby można było używać prosto wizualizacji i high/low pass filtrów
+
+>spójrz dobrze co robią funkcje które wyświetlają cokolwiek, trzeba wykonać ręcznie transformacje z final do visualisation matrix
+
+>(nie można używać od razu visualisation matrix zamiast final, bo wtedy inverse by nie działał poprawnie. dlatego potrzebujemy tych zmian z final do visu i z powrotem)
