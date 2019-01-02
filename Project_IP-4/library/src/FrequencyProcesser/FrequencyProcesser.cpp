@@ -59,7 +59,9 @@ void FrequencyProcesser::processImage()
             cout << "fndft" << endl;
             break;
         case sidft:
-            cout << "sidft" << endl;
+            slowNormalDFT();
+            cout << "Slow Normal DFT computed. Inversing." << endl;
+            slowInverseDFT();
             break;
         case fidft:
             cout << "fidft" << endl;
