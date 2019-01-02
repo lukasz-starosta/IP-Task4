@@ -95,8 +95,7 @@ bool ArgumentsHandler::isNameOfFile(std::string name) const
 
 bool ArgumentsHandler::isWithinPixelRange(int value) const
 {
-    if (value < 0 || value > 255) return false;
-    return true;
+    return (value >= 0 && value <= 255);
 }
 
 void ArgumentsHandler::helpMessage() const
