@@ -22,9 +22,11 @@ FrequencyProcesser::~FrequencyProcesser()
     {
         delete[] firstMatrix[i];
         delete[] finalMatrix[i];
+        delete[] visualisationMatrix[i];
     }
     delete[] firstMatrix;
     delete[] finalMatrix;
+    delete[] visualisationMatrix;
 }
 
 void FrequencyProcesser::processImage()
@@ -61,11 +63,7 @@ void FrequencyProcesser::processImage()
         case sidft:
             slowNormalDFT();
             cout << "Slow Normal DFT computed." << endl;
-            if (value == 1) {
-                getFourierLogarithmicVisualisation().display("DFT preview", false);
-            } else {
-                getFourierVisualisation().display("DFT preview", false);
-            }
+            displayFourierPreview();
             cout << "Computing Slow Inverse DFT." << endl;
             slowInverseDFT();
             break;
@@ -73,7 +71,11 @@ void FrequencyProcesser::processImage()
             cout << "fidft" << endl;
             break;
         case lpfilter:
-            cout << "lpfilter" << endl;
+            slowNormalDFT();
+            displayFourierPreview();
+            lowPassFilter(value);
+            displayFourierPreview();
+            slowInverseDFT();
             break;
         case hpfilter:
             cout << "hpfilter" << endl;
@@ -99,11 +101,7 @@ void FrequencyProcesser::processImage()
 
     if (option == sndft || option == fndft)
     {
-        if (value == 1) {
-            image = getFourierLogarithmicVisualisation();
-        } else {
-            image = getFourierVisualisation();
-        }
+        displayFourierPreview();
     }
 
     image.save("processedImage.bmp");
@@ -116,10 +114,22 @@ void FrequencyProcesser::initializeMatrices()
     firstMatrix = new std::complex<double> *[height];
     // Initialize the final matrix of the same size as the image
     finalMatrix = new std::complex<double> *[height];
+    // Initialize the matrix used for visualisation of the same size as the image
+    visualisationMatrix = new std::complex<double> *[height];
     // Initialize columns of the matrices
     for (int row = 0; row < height; row++)
     {
         firstMatrix[row] = new std::complex<double>[width];
         finalMatrix[row] = new std::complex<double>[width];
+        visualisationMatrix[row] = new std::complex<double>[width];
+    }
+}
+
+void FrequencyProcesser::displayFourierPreview()
+{
+    if (value == 1) {
+        getFourierVisualisation().display("DFT preview", false);
+    } else {
+        getFourierLogarithmicVisualisation().display("DFT preview", false);
     }
 }

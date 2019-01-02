@@ -13,10 +13,13 @@ private:
 
     std::complex<double> **firstMatrix;
     std::complex<double> **finalMatrix;
+    std::complex<double> **visualisationMatrix;
     void initializeMatrices();
+    void transformFinalMatrixToVisualisationMatrix();
 
     cimg_library::CImg<unsigned char> getFourierVisualisation();
     cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
+    void displayFourierPreview();
 
     void slowNormalDFT();
     void slowInverseDFT();
