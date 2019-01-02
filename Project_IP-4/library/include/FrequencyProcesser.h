@@ -25,7 +25,7 @@ private:
     void slowNormalDFT();
     void slowInverseDFT();
 
-    void lowPassFilter(double maxFrequencyPercentage);
+    void lowPassFilter(double distanceFromOrigin);
 
 public:
     FrequencyProcesser();

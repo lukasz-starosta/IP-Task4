@@ -72,11 +72,10 @@ void FrequencyProcesser::processImage()
             break;
         case lpfilter:
             slowNormalDFT();
-            transformFinalMatrixToVisualisationMatrix();
             displayFourierPreview();
             lowPassFilter(value);
-            displayFourierPreview();
             transformVisualisationMatrixToFinalMatrix();
+            displayFourierPreview();
             slowInverseDFT();
             break;
         case hpfilter:
@@ -97,12 +96,12 @@ void FrequencyProcesser::processImage()
         default:
             break;
     }
-    chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double) 1000000;
-    cout << "Algorithm duration: " << duration << " seconds";
 
     if (option == sndft || option == fndft)
     {
+        chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(t2 - t1).count() / (double) 1000000;
+        cout << "Algorithm duration: " << duration << " seconds";
         if (value == 1) {
             image = getFourierVisualisation();
         } else {

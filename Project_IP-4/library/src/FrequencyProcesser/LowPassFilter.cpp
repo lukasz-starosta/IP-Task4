@@ -1,17 +1,16 @@
 #include "FrequencyProcesser.h"
 #include <iostream>
 
-void FrequencyProcesser::lowPassFilter(double maxFrequencyPercentage)
+void FrequencyProcesser::lowPassFilter(double distanceFromOrigin)
 {
-    double maxFrequency = std::abs(finalMatrix[0][0]);
-    double cutOffFrequency = maxFrequency * maxFrequencyPercentage / 100;
+    double halfHeight = height / 2, halfWidth = width / 2, distance;
     for (int row = 0; row < height; row++)
     {
         for (int column = 0; column < width; column++)
         {
-            if (std::abs(visualisationMatrix[row][column]) > cutOffFrequency)
+            distance = std::sqrt(std::pow(row - halfHeight, 2) + std::pow(column - halfWidth, 2));
+            if (distance > distanceFromOrigin)
             {
-                std::cout << row << " " << column << " " << "zeroed" << std::endl;
                 visualisationMatrix[row][column].real(0);
                 visualisationMatrix[row][column].imag(0);
             }
