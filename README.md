@@ -7,6 +7,6 @@
 * SNDFT ✔
 * Wizualizacja ✔
 * SIDFT ✔
-* Low-Pass filter 🔜™
-* Band-Pass filter 🔜™
+* Low-Pass filter ✔
+* High-Pass filter 🔜™
 #### Piotrek:
