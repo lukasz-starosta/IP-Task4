@@ -84,10 +84,10 @@ void FrequencyProcesser::processImage()
             slowNormalDFT();
             transformFinalMatrixToVisualisationMatrix();
             //Optional for viewing step by step
-            displayFourierPreview();
+            //displayFourierPreview();
             highPassFilter(value);
             transformVisualisationMatrixToFinalMatrix();
-            displayFourierPreview();
+            //displayFourierPreview();
             slowInverseDFT();
             break;
         case bpfilter:

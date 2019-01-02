@@ -8,7 +8,7 @@ void FrequencyProcesser::highPassFilter(double distanceFromOrigin)
         for (int column = 0; column < width; column++)
         {
             distance = std::sqrt(std::pow(row - halfHeight, 2) + std::pow(column - halfWidth, 2));
-            if (distance </ distanceFromOrigin)
+            if (distance < distanceFromOrigin)
             {
                 visualisationMatrix[row][column].real(0);
                 visualisationMatrix[row][column].imag(0);
