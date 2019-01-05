@@ -6,6 +6,8 @@
 class FrequencyProcesser : public Processer
 {
 private:
+	int secondValue;
+
     enum Options
     {
         sndft = 36, fndft, sidft, fidft, lpfilter, hpfilter, bpfilter, bcfilter, hpedgefilter, pmfilter
@@ -24,13 +26,19 @@ private:
 
     void slowNormalDFT();
     void slowInverseDFT();
+	void NormalFFT();
+	void InverseFFT();
 
     void lowPassFilter(double distanceFromOrigin);
     void highPassFilter(double distanceFromOrigin);
+	void bandPassFilter(double bandwidth, double cutoff);
+	void bandCutFilter(double bandwidth, double cutoff);
+	void HPFEdge(int mask, double distanceFromOrigin);
+	void PhaseFilter(double k, double l);
 
 public:
     FrequencyProcesser();
-    FrequencyProcesser(std::string imageName, int option, double value);
+    FrequencyProcesser(std::string imageName, int option, double value, int secondValue);
     ~FrequencyProcesser() override;
     void processImage();
 };

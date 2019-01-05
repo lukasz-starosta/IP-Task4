@@ -84,6 +84,7 @@ bool ArgumentsHandler::valueIsValid(string value) const
         return false;
     if ((option == "--sndft" || option == "--fndft" || option == "--sidft" || option == "--fidft") && stoi(value) > 1)
         return false;
+	if ((option == "--bpfilter" || option == "--bcfilter" || option == "--hpedgefilter" || option == "--pmfilter") && (stoi(value) < 0 || stoi(secondValue) < 0)) return false;
     return true;
 }
 
@@ -330,7 +331,7 @@ void ArgumentsHandler::validateArguments()
                 {
                     if (option == "--help")
                     { throw error.invalidArguments; }
-                    if (option == "--hpower")
+                    if (option == "--hpower" || option == "--bpfilter" || option == "--bcfilter" || option == "--hpedgefilter" || option == "--pmfilter")
                     {
                         value = argv[3];
                         secondValue = argv[4];
