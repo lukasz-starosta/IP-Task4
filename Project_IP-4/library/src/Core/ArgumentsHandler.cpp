@@ -243,17 +243,32 @@ TASK 2:
     _________________________________________________________
     Task 4
 
-    For the DFTs
-    Value 1 shows the normalized magnitude visualisation, other values show the logarithmic magnitude visualisation.
-    --sndft <0, 1>
-        Slow Normal Discrete Fourier Transform
-    --sidft <0, 1>
-        Performs SNDFT, displays the result according to the chosen option, performs SIDFT and displays the final result, which should be the input image.
+	For the DFTs
+	Value 1 shows the normalized magnitude visualisation, other values show the logarithmic magnitude visualisation.
+	--sndft <0, 1>
+		Slow Normal Discrete Fourier Transform
+	--sidft <0, 1>
+		Performs SNDFT, displays the result according to the chosen option, 
+		performs SIDFT and displays the final result, which should be the input image.
+	--fndft <0, 1>
+		Fast Fourier Transform
+	--fidft <0, 1>
+		Performs FFT, displays the result according to the chosen option, 
+		performs IFFT and displays the final result, whch should be the input image.
 
-    --lpfilter >0
-        Performs an ideal low pass filter, the value is the maximum distance from the origin of the visualisation.
-    --hpfilter >0
-        Performs an ideal high pass filter, the value is the maximum distance from the origin of the visualisation.
+	--lpfilter >0
+		Performs an ideal low pass filter, the value is the maximum distance from the origin of the visualisation.
+	--hpfilter >0
+		Performs an ideal high pass filter, the value is the maximum distance from the origin of the visualisation.
+	--bpfilter >0 >0
+		Performs band pass filter, the values are: bandwith and the cutoff frequency.
+	--bcfilter >0 >0
+		Performs band cut filter, the values are: bandwith and the cutoff frequency.
+	--hpedgefilter {1,2} >0
+		Performs high pass filter with detection of edge direction, the values are: 
+		mask and distance from the origin of the visualisation.
+	--pmfilter >0 >0
+		Perfroms phase modyfying filter
 )";
 }
 

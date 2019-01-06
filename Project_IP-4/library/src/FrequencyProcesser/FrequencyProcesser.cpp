@@ -57,12 +57,10 @@ void FrequencyProcesser::processImage()
             slowNormalDFT();
             break;
         case fndft:
-            cout << "fndft" << endl;
 			NormalFFT();
 			break;
         case sidft:
-            //slowNormalDFT();
-			NormalFFT();
+            slowNormalDFT();
             cout << "Slow Normal DFT computed." << endl;
             displayFourierPreview();
             cout << "Computing Slow Inverse DFT." << endl;
@@ -70,9 +68,10 @@ void FrequencyProcesser::processImage()
 			//InverseFFT();
             break;
         case fidft:
-            cout << "fidft" << endl;
 			NormalFFT();
+			cout << "Fast Fourier Transform Computed." << endl;
 			displayFourierPreview();
+			cout << "Computing Fast Inverse Fourier Transform." << endl;
 			InverseFFT();
             break;
         case lpfilter:
@@ -96,7 +95,6 @@ void FrequencyProcesser::processImage()
             slowInverseDFT();
             break;
         case bpfilter:
-            cout << "bpfilter" << endl;
 			NormalFFT();
 			transformFinalMatrixToVisualisationMatrix();
 			bandPassFilter(value, secondValue);
@@ -104,7 +102,6 @@ void FrequencyProcesser::processImage()
 			InverseFFT();
             break;
         case bcfilter:
-            cout << "bcfilter" << endl;
 			NormalFFT();
 			transformFinalMatrixToVisualisationMatrix();
 			bandCutFilter(value, secondValue);
@@ -112,7 +109,6 @@ void FrequencyProcesser::processImage()
 			InverseFFT();
             break;
         case hpedgefilter:
-            cout << "hpedgefilter" << endl;
 			NormalFFT();
 			transformFinalMatrixToVisualisationMatrix();
 			HPFEdge(value, secondValue);
@@ -120,7 +116,6 @@ void FrequencyProcesser::processImage()
 			InverseFFT();
             break;
         case pmfilter:
-            cout << "pmfilter" << endl;
 			NormalFFT();
 			transformFinalMatrixToVisualisationMatrix();
 			PhaseFilter(value,secondValue);
