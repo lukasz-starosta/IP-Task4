@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
 		case ArgumentsHandler::Processers::FrequencyProcesser:
 		{
-			FrequencyProcesser FrequencyProcesser(arguments.imageName, arguments.option, (int)arguments.value);
+			FrequencyProcesser FrequencyProcesser(arguments.imageName, arguments.option, (int)arguments.value, arguments.secondValue);
 			FrequencyProcesser.processImage();
 			break;
 		}

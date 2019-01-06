@@ -10,8 +10,7 @@ FrequencyProcesser::FrequencyProcesser()
 {
 }
 
-FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value) : Processer(imageName, option,
-                                                                                                    value)
+FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value, int secondValue) : Processer(imageName, option, value), secondValue(secondValue)
 {
 }
 
@@ -58,17 +57,22 @@ void FrequencyProcesser::processImage()
             slowNormalDFT();
             break;
         case fndft:
-            cout << "fndft" << endl;
-            break;
+			NormalFFT();
+			break;
         case sidft:
             slowNormalDFT();
             cout << "Slow Normal DFT computed." << endl;
             displayFourierPreview();
             cout << "Computing Slow Inverse DFT." << endl;
             slowInverseDFT();
+			//InverseFFT();
             break;
         case fidft:
-            cout << "fidft" << endl;
+			NormalFFT();
+			cout << "Fast Fourier Transform Computed." << endl;
+			displayFourierPreview();
+			cout << "Computing Fast Inverse Fourier Transform." << endl;
+			InverseFFT();
             break;
         case lpfilter:
             slowNormalDFT();
@@ -91,16 +95,32 @@ void FrequencyProcesser::processImage()
             slowInverseDFT();
             break;
         case bpfilter:
-            cout << "bpfilter" << endl;
+			NormalFFT();
+			transformFinalMatrixToVisualisationMatrix();
+			bandPassFilter(value, secondValue);
+			transformVisualisationMatrixToFinalMatrix();
+			InverseFFT();
             break;
         case bcfilter:
-            cout << "bcfilter" << endl;
+			NormalFFT();
+			transformFinalMatrixToVisualisationMatrix();
+			bandCutFilter(value, secondValue);
+			transformVisualisationMatrixToFinalMatrix();
+			InverseFFT();
             break;
         case hpedgefilter:
-            cout << "hpedgefilter" << endl;
+			NormalFFT();
+			transformFinalMatrixToVisualisationMatrix();
+			HPFEdge(value, secondValue);
+			transformVisualisationMatrixToFinalMatrix();
+			InverseFFT();
             break;
         case pmfilter:
-            cout << "pmfilter" << endl;
+			NormalFFT();
+			transformFinalMatrixToVisualisationMatrix();
+			PhaseFilter(value,secondValue);
+			transformVisualisationMatrixToFinalMatrix();
+			InverseFFT();
             break;
         default:
             break;

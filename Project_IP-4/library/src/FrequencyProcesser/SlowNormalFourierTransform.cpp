@@ -1,7 +1,7 @@
 #include "FrequencyProcesser.h"
 
 #define _USE_MATH_DEFINES
-
+#define M_PI 3.14159265358979323846
 #include <math.h>
 #include <FrequencyProcesser.h>
 
@@ -34,8 +34,7 @@ void oneDimensionalDFTByRow(cimg_library::CImg<unsigned char> *image, std::compl
 //PLEASE SEE the instructions if in doubt about the variable naming
 // Performs a DFT from the previously obtained fourier matrix, yields another matrix with complex numbers
 void
-oneDimensionalDFTByColumn(std::complex<double> **fourierMatrix, std::complex<double> **finalMatrix, int height,
-                          int width)
+oneDimensionalDFTByColumn(std::complex<double> **fourierMatrix, std::complex<double> **finalMatrix, int height, int width)
 {
     std::complex<double> sum(0.0, 0.0);
 

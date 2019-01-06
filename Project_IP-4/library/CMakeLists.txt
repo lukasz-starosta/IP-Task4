@@ -25,7 +25,20 @@ set(SOURCE_FILES
 	src/MorphologicalOperations/MorphologicalProcesser.cpp
 	src/MorphologicalOperations/MorphologicalOperations.cpp
 	src/MorphologicalOperations/RegionMerging.cpp
-        src/FrequencyProcesser/FrequencyProcesser.cpp include/FrequencyProcesser.h src/FrequencyProcesser/SlowNormalFourierTransform.cpp src/FrequencyProcesser/Visualisation.cpp src/FrequencyProcesser/SlowInverseFourierTransform.cpp src/FrequencyProcesser/LowPassFilter.cpp src/FrequencyProcesser/HighPassFilter.cpp)
+    src/FrequencyProcesser/FrequencyProcesser.cpp 
+	include/FrequencyProcesser.h 
+	src/FrequencyProcesser/SlowNormalFourierTransform.cpp 
+	src/FrequencyProcesser/Visualisation.cpp 
+	src/FrequencyProcesser/SlowInverseFourierTransform.cpp 
+	src/FrequencyProcesser/LowPassFilter.cpp 
+	src/FrequencyProcesser/HighPassFilter.cpp
+	src/FrequencyProcesser/FastNormalFourierTransform.cpp
+	src/FrequencyProcesser/FastInverseFourierTransform.cpp
+	src/FrequencyProcesser/BandpassFilter.cpp
+	src/FrequencyProcesser/BandcutFilter.cpp
+	src/FrequencyProcesser/HPFEdge.cpp
+	src/FrequencyProcesser/PhaseFilter.cpp
+		)
 
 add_library(Library ${SOURCE_FILES})
 target_include_directories(Library PUBLIC include 
