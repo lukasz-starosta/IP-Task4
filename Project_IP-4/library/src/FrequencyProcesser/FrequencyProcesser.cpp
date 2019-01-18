@@ -194,13 +194,24 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
     cout << "Angle: ";
     cin >> angle;
 
-//    for (int row = 0; row < height; row++)
-//    {
-//        for (int column = 0; column < width; column++)
-//        {
-//
-//        }
-//    }
+    double halfHeight = height / 2, halfWidth = width / 2, distance;
+    int channel;
+    unsigned char COLOR_WHITE = (unsigned char) 255;
+
+    for (int row = 0; row < height; row++)
+    {
+        for (int column = 0; column < width; column++)
+        {
+            distance = std::sqrt(std::pow(row - halfHeight, 2) + std::pow(column - halfWidth, 2));
+            if (distance > radius)
+            {
+                for (channel = 0; channel < 3; channel++)
+                {
+                    mask(row, column, channel) = COLOR_WHITE;
+                }
+            }
+        }
+    }
 
     return mask;
 }
