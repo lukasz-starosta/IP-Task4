@@ -10,7 +10,8 @@ FrequencyProcesser::FrequencyProcesser()
 {
 }
 
-FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value, int secondValue) : Processer(imageName, option, value), secondValue(secondValue)
+FrequencyProcesser::FrequencyProcesser(std::string imageName, int option, double value, int secondValue) : Processer(imageName, option, value),
+                                                                                                           secondValue(secondValue)
 {
 }
 
@@ -57,22 +58,22 @@ void FrequencyProcesser::processImage()
             slowNormalDFT();
             break;
         case fndft:
-			NormalFFT();
-			break;
+            NormalFFT();
+            break;
         case sidft:
             slowNormalDFT();
             cout << "Slow Normal DFT computed." << endl;
             displayFourierPreview();
             cout << "Computing Slow Inverse DFT." << endl;
             slowInverseDFT();
-			//InverseFFT();
+            //InverseFFT();
             break;
         case fidft:
-			NormalFFT();
-			cout << "Fast Fourier Transform Computed." << endl;
-			displayFourierPreview();
-			cout << "Computing Fast Inverse Fourier Transform." << endl;
-			InverseFFT();
+            NormalFFT();
+            cout << "Fast Fourier Transform Computed." << endl;
+            displayFourierPreview();
+            cout << "Computing Fast Inverse Fourier Transform." << endl;
+            InverseFFT();
             break;
         case lpfilter:
             slowNormalDFT();
@@ -95,32 +96,35 @@ void FrequencyProcesser::processImage()
             slowInverseDFT();
             break;
         case bpfilter:
-			NormalFFT();
-			transformFinalMatrixToVisualisationMatrix();
-			bandPassFilter(value, secondValue);
-			transformVisualisationMatrixToFinalMatrix();
-			InverseFFT();
+            NormalFFT();
+            transformFinalMatrixToVisualisationMatrix();
+            bandPassFilter(value, secondValue);
+            transformVisualisationMatrixToFinalMatrix();
+            InverseFFT();
             break;
         case bcfilter:
-			NormalFFT();
-			transformFinalMatrixToVisualisationMatrix();
-			bandCutFilter(value, secondValue);
-			transformVisualisationMatrixToFinalMatrix();
-			InverseFFT();
+            NormalFFT();
+            transformFinalMatrixToVisualisationMatrix();
+            bandCutFilter(value, secondValue);
+            transformVisualisationMatrixToFinalMatrix();
+            InverseFFT();
             break;
         case hpedgefilter:
-			NormalFFT();
-			transformFinalMatrixToVisualisationMatrix();
-			HPFEdge(value, secondValue);
-			transformVisualisationMatrixToFinalMatrix();
-			InverseFFT();
+            mask = getMaskFromUser();
+            mask.display("Mask", false);
+//			NormalFFT();
+//			transformFinalMatrixToVisualisationMatrix();
+//            displayFourierPreview();
+//			HPFEdge(value, secondValue);
+//			transformVisualisationMatrixToFinalMatrix();
+//			InverseFFT();
             break;
         case pmfilter:
-			NormalFFT();
-			transformFinalMatrixToVisualisationMatrix();
-			PhaseFilter(value,secondValue);
-			transformVisualisationMatrixToFinalMatrix();
-			InverseFFT();
+            NormalFFT();
+            transformFinalMatrixToVisualisationMatrix();
+            PhaseFilter(value, secondValue);
+            transformVisualisationMatrixToFinalMatrix();
+            InverseFFT();
             break;
         default:
             break;
@@ -143,8 +147,8 @@ void FrequencyProcesser::processImage()
         }
     }
 
-    image.save("processedImage.bmp");
-    image.display("Processed image", false);
+//    image.save("processedImage.bmp");
+//    image.display("Processed image", false);
 }
 
 void FrequencyProcesser::initializeMatrices()
@@ -174,4 +178,29 @@ void FrequencyProcesser::displayFourierPreview()
     {
         getFourierLogarithmicVisualisation().display("DFT preview", false);
     }
+}
+
+cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
+{
+    short int radius;
+    short int breadth;
+    short int angle;
+    cimg_library::CImg<unsigned char> mask(width, height, 1, 3, 0);
+    cout << "Please create a mask you would like to use." << endl;
+    cout << "Radius: ";
+    cin >> radius;
+    cout << "Breadth: ";
+    cin >> breadth;
+    cout << "Angle: ";
+    cin >> angle;
+
+//    for (int row = 0; row < height; row++)
+//    {
+//        for (int column = 0; column < width; column++)
+//        {
+//
+//        }
+//    }
+
+    return mask;
 }

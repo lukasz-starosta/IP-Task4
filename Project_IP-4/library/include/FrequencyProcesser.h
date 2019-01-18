@@ -13,6 +13,8 @@ private:
         sndft = 36, fndft, sidft, fidft, lpfilter, hpfilter, bpfilter, bcfilter, hpedgefilter, pmfilter
     };
 
+	cimg_library::CImg<unsigned char> mask;
+
     std::complex<double> **firstMatrix;
     std::complex<double> **finalMatrix;
     std::complex<double> **visualisationMatrix;
@@ -23,6 +25,7 @@ private:
     cimg_library::CImg<unsigned char> getFourierVisualisation();
     cimg_library::CImg<unsigned char> getFourierLogarithmicVisualisation();
     void displayFourierPreview();
+    cimg_library::CImg<unsigned char> getMaskFromUser();
 
     void slowNormalDFT();
     void slowInverseDFT();
@@ -33,7 +36,7 @@ private:
     void highPassFilter(double distanceFromOrigin);
 	void bandPassFilter(double bandwidth, double cutoff);
 	void bandCutFilter(double bandwidth, double cutoff);
-	void HPFEdge(int mask, double distanceFromOrigin);
+	void HPFEdge(cimg_library::CImg<unsigned char> *mask);
 	void PhaseFilter(double k, double l);
 
 public:
