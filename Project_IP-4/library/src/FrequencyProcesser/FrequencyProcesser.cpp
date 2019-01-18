@@ -61,17 +61,17 @@ void FrequencyProcesser::processImage()
 			break;
         case sidft:
             slowNormalDFT();
-            cout << "Slow Normal DFT computed." << endl;
-            displayFourierPreview();
-            cout << "Computing Slow Inverse DFT." << endl;
+            //cout << "Slow Normal DFT computed." << endl;
+            //displayFourierPreview();
+            //cout << "Computing Slow Inverse DFT." << endl;
             slowInverseDFT();
 			//InverseFFT();
             break;
         case fidft:
 			NormalFFT();
-			cout << "Fast Fourier Transform Computed." << endl;
-			displayFourierPreview();
-			cout << "Computing Fast Inverse Fourier Transform." << endl;
+			//cout << "Fast Fourier Transform Computed." << endl;
+			//displayFourierPreview();
+			//cout << "Computing Fast Inverse Fourier Transform." << endl;
 			InverseFFT();
             break;
         case lpfilter:
