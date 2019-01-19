@@ -190,26 +190,23 @@ int truncateCoord(int coord, int limit)
 
 cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 {
-    short int radius;
+    double radius, angleInRadians, distance;
     short int angle;
-    double angleInRadians;
     float spreadIncrement = 0.2;
 
     cimg_library::CImg<unsigned char> maskImage(width, height, 1, 3, 0);
     cout << "Please create a mask you would like to use." << endl;
-//    cout << "Radius: ";
-//    cin >> radius;
+    cout << "Radius: ";
+    cin >> radius;
     cout << "Angle in degrees: ";
     cin >> angle;
 
     angleInRadians = angle * 3.14 / 180;
-//    cout << angleInRadians;
-    //    cout << "Spread coefficient: ";
-//    cin >> spreadIncrement;
 
-    double tangent;
+    cout << "Spread coefficient: ";
+    cin >> spreadIncrement;
 
-    int halfHeight = height / 2, halfWidth = width / 2, distance;
+    int halfHeight = height / 2, halfWidth = width / 2;
     int x1 = halfWidth, x2, y1 = halfHeight, y2, opposite_x1 = halfWidth, opposite_x2, opposite_y1 = halfHeight, opposite_y2;
 
     if ((angle >= 0 && angle <= 90) || (angle >= 180 && angle <= 270))
@@ -233,6 +230,24 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 
         drawLine(&maskImage, x1, x2, y1, y2, spreadIncrement, false);
         drawLine(&maskImage, opposite_x1, opposite_x2, opposite_y1, opposite_y2, spreadIncrement, false);
+    }
+    else {
+        cout << "Wrong angle. Only a circle will be generated." << endl;
+    }
+
+    for (int row = 0; row < height; row++)
+    {
+        for (int column = 0; column < width; column++)
+        {
+            distance = std::sqrt(std::pow(row - halfHeight, 2) + std::pow(column - halfWidth, 2));
+            if (distance < radius)
+            {
+                for (int channel = 0; channel < 3; channel++)
+                {
+                    maskImage(column, row, channel) = 0;
+                }
+            }
+        }
     }
 
     return maskImage;
