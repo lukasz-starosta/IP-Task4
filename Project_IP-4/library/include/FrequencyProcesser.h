@@ -33,6 +33,8 @@ private:
 	void NormalFFT();
 	void InverseFFT();
 
+	
+
     void lowPassFilter(double distanceFromOrigin);
     void highPassFilter(double distanceFromOrigin);
 	void bandPassFilter(double bandwidth, double cutoff);
