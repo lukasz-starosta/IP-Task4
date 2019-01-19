@@ -37,7 +37,7 @@ private:
     void highPassFilter(double distanceFromOrigin);
 	void bandPassFilter(double bandwidth, double cutoff);
 	void bandCutFilter(double bandwidth, double cutoff);
-	void HPFEdge(cimg_library::CImg<unsigned char> *mask);
+	void HPFEdge();
 	void PhaseFilter(double k, double l);
 
 public:

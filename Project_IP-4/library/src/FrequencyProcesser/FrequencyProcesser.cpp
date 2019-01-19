@@ -112,12 +112,13 @@ void FrequencyProcesser::processImage()
         case hpedgefilter:
             mask = getMaskFromUser();
             mask.display("Mask", false);
-//			NormalFFT();
-//			transformFinalMatrixToVisualisationMatrix();
-//            displayFourierPreview();
-//			HPFEdge(value, secondValue);
-//			transformVisualisationMatrixToFinalMatrix();
-//			InverseFFT();
+			NormalFFT();
+			transformFinalMatrixToVisualisationMatrix();
+            displayFourierPreview();
+			HPFEdge();
+			transformVisualisationMatrixToFinalMatrix();
+            displayFourierPreview();
+			InverseFFT();
             break;
         case pmfilter:
             NormalFFT();
@@ -147,8 +148,8 @@ void FrequencyProcesser::processImage()
         }
     }
 
-//    image.save("processedImage.bmp");
-//    image.display("Processed image", false);
+    image.save("processedImage.bmp");
+    image.display("Processed image", false);
 }
 
 void FrequencyProcesser::initializeMatrices()
