@@ -193,7 +193,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
     short int radius;
     short int angle;
     double angleInRadians;
-    float spreadIncrement;
+    float spreadIncrement = 0.2;
 
     cimg_library::CImg<unsigned char> maskImage(width, height, 1, 3, 0);
     cout << "Please create a mask you would like to use." << endl;
@@ -219,21 +219,26 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 
         opposite_x2 = 0;
         opposite_y2 = truncateCoord((int) (height - tan(angleInRadians) * halfWidth), height);
-    }
-//    } else if ((angle > 90 && angle < 180) || (angle > 270 && angle <= 360))
-//    {
-//        x2 = width - 1;
-//        y2 = truncateCoord((int) (tan(angleInRadians) * halfWidth), width);
-//
-//    }
 
-    drawLine(&maskImage, x1, x2, y1, y2, 0.2);
-    drawLine(&maskImage, opposite_x1, opposite_x2, opposite_y1, opposite_y2, 0.2);
+        drawLine(&maskImage, x1, x2, y1, y2, spreadIncrement, true);
+        drawLine(&maskImage, opposite_x1, opposite_x2, opposite_y1, opposite_y2, spreadIncrement, true);
+    } else if ((angle > 90 && angle < 180) || (angle > 270 && angle <= 360))
+    {
+        angleInRadians = (angle - 90) * 3.14 / 180;
+        x2 = truncateCoord((int) (width - tan(angleInRadians) * halfHeight), width);
+        y2 = height - 1;
+
+        opposite_x2 = truncateCoord((int) (tan(angleInRadians) * halfHeight), width);
+        opposite_y2 = 0;
+
+        drawLine(&maskImage, x1, x2, y1, y2, spreadIncrement, false);
+        drawLine(&maskImage, opposite_x1, opposite_x2, opposite_y1, opposite_y2, spreadIncrement, false);
+    }
 
     return maskImage;
 }
 
-void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement)
+void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement, bool isSpreadingY)
 {
     unsigned char COLOR_WHITE = (unsigned char) 255;
     float spread = 1;
@@ -259,12 +264,21 @@ void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, 
         {
             for (channel = 0; channel < 3; channel++)
             {
-                if (y + s < height)
-                    (*maskImage)(x, y + s, channel) = COLOR_WHITE;
-
-                if (y - s > 0)
-                    (*maskImage)(x, y - s, channel) = COLOR_WHITE;
+                if (isSpreadingY)
+                {
+                    if (y + s < height)
+                        (*maskImage)(x, y + s, channel) = COLOR_WHITE;
+                    if (y - s > 0)
+                        (*maskImage)(x, y - s, channel) = COLOR_WHITE;
+                } else
+                {
+                    if (x + s < width)
+                        (*maskImage)(x + s, y, channel) = COLOR_WHITE;
+                    if (x - s > 0)
+                        (*maskImage)(x - s, y, channel) = COLOR_WHITE;
+                }
             }
+
         }
         x += xIncrement;
         y += yIncrement;
