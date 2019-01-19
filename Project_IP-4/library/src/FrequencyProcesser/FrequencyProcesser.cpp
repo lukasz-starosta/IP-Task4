@@ -180,6 +180,14 @@ void FrequencyProcesser::displayFourierPreview()
     }
 }
 
+
+int truncateCoord(int coord, int limit)
+{
+    if (coord >= limit) coord = limit - 1;
+    else if (coord < 0) coord = 0;
+    return coord;
+}
+
 cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 {
     short int radius;
@@ -194,7 +202,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
     cout << "Angle in degrees: ";
     cin >> angle;
 
-    angleInRadians = angle* 3.14 / 180;
+    angleInRadians = angle * 3.14 / 180;
 //    cout << angleInRadians;
     //    cout << "Spread coefficient: ";
 //    cin >> spreadIncrement;
@@ -202,25 +210,25 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
     double tangent;
 
     int halfHeight = height / 2, halfWidth = width / 2, distance;
+    int x1 = halfWidth, x2, y1 = halfHeight, y2, opposite_x1 = halfWidth, opposite_x2, opposite_y1 = halfHeight, opposite_y2;
 
-    if ((angle >= 0 && angle <= 90) || (angle >= 180 && angle <= 270)) {
+    if ((angle >= 0 && angle <= 90) || (angle >= 180 && angle <= 270))
+    {
+        x2 = width - 1;
+        y2 = truncateCoord((int) (tan(angleInRadians) * halfWidth), height);
 
-    int x1, x2, y1, y2;
-    x1 = halfWidth;
-    y1 = halfHeight;
-    x2 = width;
-    y2 = (int)(tan(angleInRadians) * halfWidth > 0 ? tan(angleInRadians) * halfWidth : 0);
-
-    if (x2 >= width) x2 = width - 1;
-    else if (x2 < 0) x2 = 0;
-
-    if (y2 >= height) y2 = height - 1;
-    else if (y2 < 0) y2 = 0;
-    drawLine(&maskImage, x1, x2, y1, y2, 0.25);
-
-    } else if ((angle > 90 && angle < 180) || (angle > 270 && angle <= 360)) {
-
+        opposite_x2 = 0;
+        opposite_y2 = truncateCoord((int) (height - tan(angleInRadians) * halfWidth), height);
     }
+//    } else if ((angle > 90 && angle < 180) || (angle > 270 && angle <= 360))
+//    {
+//        x2 = width - 1;
+//        y2 = truncateCoord((int) (tan(angleInRadians) * halfWidth), width);
+//
+//    }
+
+    drawLine(&maskImage, x1, x2, y1, y2, 0.2);
+    drawLine(&maskImage, opposite_x1, opposite_x2, opposite_y1, opposite_y2, 0.2);
 
     return maskImage;
 }
@@ -228,6 +236,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement)
 {
     unsigned char COLOR_WHITE = (unsigned char) 255;
+    float spread = 1;
 
     int dx = x2 - x1;
     int dy = y2 - y1;
@@ -246,19 +255,19 @@ void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, 
     int channel;
     for (int i = 0; i <= steps; i++)
     {
-        for (int s = 0; s < spreadIncrement; s++)
+        for (int s = 0; s < spread; s++)
         {
             for (channel = 0; channel < 3; channel++)
             {
-                if (y+s < height)
-                (*maskImage)(x, y + s, channel) = COLOR_WHITE;
+                if (y + s < height)
+                    (*maskImage)(x, y + s, channel) = COLOR_WHITE;
 
-                if (y-s > 0)
-                (*maskImage)(x, y - s, channel) = COLOR_WHITE;
+                if (y - s > 0)
+                    (*maskImage)(x, y - s, channel) = COLOR_WHITE;
             }
         }
         x += xIncrement;
         y += yIncrement;
-        spreadIncrement++;
+        spread += spreadIncrement;
     }
 }
