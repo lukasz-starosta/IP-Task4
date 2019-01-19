@@ -183,35 +183,82 @@ void FrequencyProcesser::displayFourierPreview()
 cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 {
     short int radius;
-    short int breadth;
     short int angle;
-    cimg_library::CImg<unsigned char> mask(width, height, 1, 3, 0);
+    double angleInRadians;
+    float spreadIncrement;
+
+    cimg_library::CImg<unsigned char> maskImage(width, height, 1, 3, 0);
     cout << "Please create a mask you would like to use." << endl;
-    cout << "Radius: ";
-    cin >> radius;
-    cout << "Breadth: ";
-    cin >> breadth;
-    cout << "Angle: ";
+//    cout << "Radius: ";
+//    cin >> radius;
+    cout << "Angle in degrees: ";
     cin >> angle;
 
-    double halfHeight = height / 2, halfWidth = width / 2, distance;
-    int channel;
-    unsigned char COLOR_WHITE = (unsigned char) 255;
+    angleInRadians = angle* 3.14 / 180;
+//    cout << angleInRadians;
+    //    cout << "Spread coefficient: ";
+//    cin >> spreadIncrement;
 
-    for (int row = 0; row < height; row++)
-    {
-        for (int column = 0; column < width; column++)
-        {
-            distance = std::sqrt(std::pow(row - halfHeight, 2) + std::pow(column - halfWidth, 2));
-            if (distance > radius)
-            {
-                for (channel = 0; channel < 3; channel++)
-                {
-                    mask(row, column, channel) = COLOR_WHITE;
-                }
-            }
-        }
+    double tangent;
+
+    int halfHeight = height / 2, halfWidth = width / 2, distance;
+
+    if ((angle >= 0 && angle <= 90) || (angle >= 180 && angle <= 270)) {
+
+    int x1, x2, y1, y2;
+    x1 = halfWidth;
+    y1 = halfHeight;
+    x2 = width;
+    y2 = (int)(tan(angleInRadians) * halfWidth > 0 ? tan(angleInRadians) * halfWidth : 0);
+
+    if (x2 >= width) x2 = width - 1;
+    else if (x2 < 0) x2 = 0;
+
+    if (y2 >= height) y2 = height - 1;
+    else if (y2 < 0) y2 = 0;
+    drawLine(&maskImage, x1, x2, y1, y2, 0.25);
+
+    } else if ((angle > 90 && angle < 180) || (angle > 270 && angle <= 360)) {
+
     }
 
-    return mask;
+    return maskImage;
+}
+
+void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement)
+{
+    unsigned char COLOR_WHITE = (unsigned char) 255;
+
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+
+    // calculate steps required for generating pixels
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    // calculate increment in x & y for each steps
+    float xIncrement = dx / (float) steps;
+    float yIncrement = dy / (float) steps;
+
+    // Put pixel for each step
+    float x = x1;
+    float y = y1;
+
+    int channel;
+    for (int i = 0; i <= steps; i++)
+    {
+        for (int s = 0; s < spreadIncrement; s++)
+        {
+            for (channel = 0; channel < 3; channel++)
+            {
+                if (y+s < height)
+                (*maskImage)(x, y + s, channel) = COLOR_WHITE;
+
+                if (y-s > 0)
+                (*maskImage)(x, y - s, channel) = COLOR_WHITE;
+            }
+        }
+        x += xIncrement;
+        y += yIncrement;
+        spreadIncrement++;
+    }
 }

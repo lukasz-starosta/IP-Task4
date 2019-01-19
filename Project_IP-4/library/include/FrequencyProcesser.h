@@ -14,6 +14,7 @@ private:
     };
 
 	cimg_library::CImg<unsigned char> mask;
+	void drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement);
 
     std::complex<double> **firstMatrix;
     std::complex<double> **finalMatrix;
