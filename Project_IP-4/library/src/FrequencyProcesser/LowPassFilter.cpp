@@ -1,3 +1,6 @@
+
+#include <FrequencyProcesser.h>
+
 #include "FrequencyProcesser.h"
 
 void FrequencyProcesser::lowPassFilter(double distanceFromOrigin)
