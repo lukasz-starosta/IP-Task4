@@ -192,7 +192,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 {
     double radius, angleInRadians, distance;
     short int angle;
-    float spreadIncrement = 0.2;
+    double spreadIncrement = 0.2;
 
     cimg_library::CImg<unsigned char> maskImage(width, height, 1, 3, 0);
     cout << "Please create a mask you would like to use." << endl;
@@ -256,7 +256,7 @@ cimg_library::CImg<unsigned char> FrequencyProcesser::getMaskFromUser()
 void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, int x1, int x2, int y1, int y2, double spreadIncrement, bool isSpreadingY)
 {
     unsigned char COLOR_WHITE = (unsigned char) 255;
-    float spread = 1;
+    double spread = 1;
 
     int dx = x2 - x1;
     int dy = y2 - y1;
@@ -269,10 +269,10 @@ void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, 
     float yIncrement = dy / (float) steps;
 
     // Put pixel for each step
-    float x = x1;
-    float y = y1;
+    float x = (float)x1;
+    float y = (float)y1;
 
-    int channel;
+    unsigned int channel;
     for (int i = 0; i <= steps; i++)
     {
         for (int s = 0; s < spread; s++)
@@ -282,15 +282,15 @@ void FrequencyProcesser::drawLine(cimg_library::CImg<unsigned char> *maskImage, 
                 if (isSpreadingY)
                 {
                     if (y + s < height)
-                        (*maskImage)(x, y + s, channel) = COLOR_WHITE;
+                        (*maskImage)((unsigned int)x, (unsigned int)(y + s), channel) = COLOR_WHITE;
                     if (y - s > 0)
-                        (*maskImage)(x, y - s, channel) = COLOR_WHITE;
+                        (*maskImage)((unsigned int)x, (unsigned int)(y - s), channel) = COLOR_WHITE;
                 } else
                 {
                     if (x + s < width)
-                        (*maskImage)(x + s, y, channel) = COLOR_WHITE;
+                        (*maskImage)((unsigned int)(x + s), (unsigned int)y, channel) = COLOR_WHITE;
                     if (x - s > 0)
-                        (*maskImage)(x - s, y, channel) = COLOR_WHITE;
+                        (*maskImage)((unsigned int)(x - s), (unsigned int)y, channel) = COLOR_WHITE;
                 }
             }
 
